@@ -54,7 +54,14 @@ const bk = {
   send: document.getElementById('bkSend'),
   done: document.getElementById('bkDone'),
   reopen: document.getElementById('bkReopen'),
+  progress: [...document.querySelectorAll('#bkProgress li')],
+  panels: [...document.querySelectorAll('.bk-panel')],
+  review: document.getElementById('bkReview'),
+  back: document.getElementById('bkBack'),
+  next: document.getElementById('bkNext'),
+  fine: document.getElementById('bkFine'),
 };
+let step = 1;
 let lastFocus = null;
 let lastWhatsAppUrl = '';
 
@@ -140,6 +147,50 @@ const missingFields = (r) => [
   r.hour === null && 'time', !r.name && 'name',
 ].filter(Boolean);
 
+// ---------- steps: 1 service + extras · 2 location · 3 date + time · 4 details ----------
+const STEPS = {
+  1: { needs: (r) => (r.service ? [] : ['a service']), hint: 'Choose a service to continue' },
+  2: { needs: (r) => (r.location ? [] : ['a location']), hint: 'Choose a location to continue' },
+  3: { needs: (r) => [!r.dateIso && 'a date', r.hour === null && 'a time'].filter(Boolean), hint: null },
+  4: { needs: (r) => (r.name ? [] : ['your name']), hint: 'Add your name to send' },
+};
+const LAST_STEP = 4;
+const stepDone = (n, r) => STEPS[n].needs(r).length === 0;
+// a step can be opened if every step before it is complete
+const canReach = (n, r) => [...Array(n - 1)].every((_, i) => stepDone(i + 1, r));
+
+const fmtDateLong = (iso) => fromIso(iso).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+
+const renderReview = (r) => {
+  const rows = [
+    ['Service', r.service ? `${r.service.name}${r.service.price ? ` · ${ksh(r.service.price)}` : ''}` : '—', 1],
+  ];
+  if (r.extras.length) rows.push(['Extras', r.extras.map((x) => x.name).join(', '), 1]);
+  rows.push(
+    ['Location', r.location ? r.location.full : '—', 2],
+    ['When', r.dateIso && r.hour !== null ? `${fmtDateLong(r.dateIso)}, ${fmtHour(r.hour)}` : '—', 3],
+  );
+  bk.review.innerHTML = rows.map(([label, value, s]) =>
+    `<dt>${label}</dt><dd>${value}</dd><button type="button" data-goto="${s}">Edit</button>`).join('');
+};
+
+const showStep = (n, { focus = true } = {}) => {
+  const forward = n >= step;
+  step = n;
+  bk.panels.forEach((p) => {
+    const on = Number(p.dataset.step) === n;
+    p.hidden = !on;
+    p.classList.toggle('from-left', on && !forward);
+  });
+  bk.scroll.scrollTop = 0;
+  update();
+  if (focus) {
+    const first = bk.panels[n - 1].querySelector('legend');
+    first?.setAttribute('tabindex', '-1');
+    first?.focus({ preventScroll: true });
+  }
+};
+
 const update = () => {
   const r = readForm();
   // extras only apply to extension sets
@@ -149,15 +200,35 @@ const update = () => {
   else if (r.service.price === null) bk.total.textContent = 'On request';
   else bk.total.textContent = ksh(r.service.price + r.extras.reduce((sum, x) => sum + x.price, 0));
 
-  const missing = missingFields(r);
-  if (missing.length) {
-    bk.missing.textContent = `Still needed: ${missing.join(', ')}`;
-  } else if (!WHATSAPP_NUMBER) {
+  // progress bar
+  bk.progress.forEach((li) => {
+    const n = Number(li.dataset.step);
+    li.classList.toggle('is-current', n === step);
+    li.classList.toggle('is-done', n < step || (n !== step && stepDone(n, r) && canReach(n, r)));
+    li.querySelector('button').disabled = n === step || !canReach(n, r);
+    li.querySelector('button').setAttribute('aria-current', n === step ? 'step' : 'false');
+  });
+
+  // buttons for this step
+  const isLast = step === LAST_STEP;
+  const needs = STEPS[step].needs(r);
+  bk.back.hidden = step === 1;
+  bk.next.hidden = isLast;
+  bk.send.hidden = !isLast;
+  bk.fine.hidden = !isLast;
+  bk.next.disabled = needs.length > 0;
+  if (isLast) {
+    renderReview(r);
+    bk.send.disabled = missingFields(r).length > 0 || !WHATSAPP_NUMBER;
+  }
+
+  if (needs.length) {
+    bk.missing.textContent = STEPS[step].hint || `Choose ${needs.join(' and ')} to continue`;
+  } else if (isLast && !WHATSAPP_NUMBER) {
     bk.missing.textContent = 'WhatsApp booking isn’t switched on yet. Please reach out on Instagram for now.';
   } else {
     bk.missing.textContent = '';
   }
-  bk.send.disabled = missing.length > 0 || !WHATSAPP_NUMBER;
 };
 
 const buildMessage = (r) => {
@@ -194,7 +265,7 @@ const openBooking = ({ service, look } = {}) => {
     bk.notes.value = `I’d like the inspiration look ${look} from the gallery.${bk.notes.value ? `\n${bk.notes.value}` : ''}`;
   }
   buildTimes();
-  update();
+  showStep(1, { focus: false });
   bk.done.hidden = true;
   bk.panel.classList.remove('is-done');
   bk.root.classList.add('is-open');
@@ -241,6 +312,25 @@ bk.form.addEventListener('change', (e) => {
 });
 bk.form.addEventListener('input', update);
 bk.form.addEventListener('submit', (e) => e.preventDefault());
+
+// step navigation
+bk.next.addEventListener('click', () => {
+  if (!stepDone(step, readForm())) return update();
+  showStep(Math.min(LAST_STEP, step + 1));
+});
+bk.back.addEventListener('click', () => showStep(Math.max(1, step - 1)));
+bk.progress.forEach((li) => li.querySelector('button').addEventListener('click', () => {
+  const n = Number(li.dataset.step);
+  if (n !== step && canReach(n, readForm())) showStep(n);
+}));
+bk.review.addEventListener('click', (e) => {
+  const go = e.target.closest('[data-goto]');
+  if (go) showStep(Number(go.dataset.goto));
+});
+// Enter in the name field moves on / sends instead of doing nothing
+bk.name.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !bk.send.disabled) { e.preventDefault(); bk.send.click(); }
+});
 
 bk.send.addEventListener('click', () => {
   const r = readForm();

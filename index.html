@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Instrument+Serif&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="assets/poster.jpg" />
-  <link rel="stylesheet" href="styles.css?v=17" />
+  <link rel="stylesheet" href="styles.css?v=20" />
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -312,45 +312,71 @@
         </header>
         <h2 id="bookingTitle" class="booking-title">BOOK YOUR<br />LASH MOMENT.</h2>
 
+        <!-- step progress: completed steps can be clicked to go back -->
+        <ol class="bk-progress" id="bkProgress" aria-label="Booking steps">
+          <li data-step="1"><button type="button" aria-label="Step 1 of 4: Service" title="Service"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></button></li>
+          <li data-step="2"><button type="button" aria-label="Step 2 of 4: Location" title="Location"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></button></li>
+          <li data-step="3"><button type="button" aria-label="Step 3 of 4: Date and time" title="Date and time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg></button></li>
+          <li data-step="4"><button type="button" aria-label="Step 4 of 4: Your details" title="Your details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button></li>
+        </ol>
+
         <form id="bookingForm" class="booking-form" novalidate>
-          <fieldset class="bk-step">
-            <legend><span class="bk-num">01</span>Service</legend>
-            <div class="bk-options" id="bkServices"></div>
-          </fieldset>
+          <!-- STEP 1: service + extras -->
+          <div class="bk-panel" data-step="1">
+            <fieldset class="bk-step">
+              <legend>Choose your service</legend>
+              <div class="bk-options" id="bkServices"></div>
+            </fieldset>
+            <fieldset class="bk-step" id="bkExtrasStep">
+              <legend>Add extras <em>optional</em></legend>
+              <div class="bk-options bk-options--small" id="bkExtras"></div>
+            </fieldset>
+          </div>
 
-          <fieldset class="bk-step" id="bkExtrasStep">
-            <legend><span class="bk-num">02</span>Extras <em>optional</em></legend>
-            <div class="bk-options bk-options--small" id="bkExtras"></div>
-          </fieldset>
+          <!-- STEP 2: location -->
+          <div class="bk-panel" data-step="2" hidden>
+            <fieldset class="bk-step">
+              <legend>Where would you like to come?</legend>
+              <div class="bk-options" id="bkLocations"></div>
+            </fieldset>
+          </div>
 
-          <fieldset class="bk-step">
-            <legend><span class="bk-num">03</span>Location</legend>
-            <div class="bk-options" id="bkLocations"></div>
-          </fieldset>
+          <!-- STEP 3: date + time -->
+          <div class="bk-panel" data-step="3" hidden>
+            <fieldset class="bk-step">
+              <legend>Pick a date</legend>
+              <div class="bk-dates" id="bkDates"></div>
+            </fieldset>
+            <fieldset class="bk-step">
+              <legend>Pick a time</legend>
+              <div class="bk-times" id="bkTimes"><p class="bk-hint">Pick a date to see open times.</p></div>
+            </fieldset>
+          </div>
 
-          <fieldset class="bk-step">
-            <legend><span class="bk-num">04</span>Date</legend>
-            <div class="bk-dates" id="bkDates"></div>
-          </fieldset>
-
-          <fieldset class="bk-step">
-            <legend><span class="bk-num">05</span>Time</legend>
-            <div class="bk-times" id="bkTimes"><p class="bk-hint">Pick a date to see open times.</p></div>
-          </fieldset>
-
-          <fieldset class="bk-step">
-            <legend><span class="bk-num">06</span>Your details</legend>
-            <label class="bk-field"><span>Name</span><input type="text" id="bkName" name="name" autocomplete="name" /></label>
-            <label class="bk-field"><span>Notes <em>optional</em></span><textarea id="bkNotes" name="notes" rows="3" placeholder="Lash look, allergies, anything I should know"></textarea></label>
-          </fieldset>
+          <!-- STEP 4: details + review -->
+          <div class="bk-panel" data-step="4" hidden>
+            <fieldset class="bk-step">
+              <legend>Your booking</legend>
+              <dl class="bk-review" id="bkReview"></dl>
+            </fieldset>
+            <fieldset class="bk-step">
+              <legend>Your details</legend>
+              <label class="bk-field"><span>Name</span><input type="text" id="bkName" name="name" autocomplete="name" /></label>
+              <label class="bk-field"><span>Notes <em>optional</em></span><textarea id="bkNotes" name="notes" rows="3" placeholder="Lash look, allergies, anything I should know"></textarea></label>
+            </fieldset>
+          </div>
         </form>
       </div>
 
       <footer class="booking-summary">
         <div class="bk-total"><span class="serif-note">Estimated total</span><strong id="bkTotal">&mdash;</strong></div>
         <p class="bk-missing" id="bkMissing" aria-live="polite"></p>
-        <button type="button" class="btn btn-dark bk-send" id="bkSend" disabled>SEND REQUEST ON WHATSAPP</button>
-        <p class="bk-fine">Your request opens in WhatsApp. I&rsquo;ll confirm your slot there.</p>
+        <div class="bk-nav">
+          <button type="button" class="btn btn-outline bk-back" id="bkBack">BACK</button>
+          <button type="button" class="btn btn-dark bk-next" id="bkNext" disabled>NEXT</button>
+          <button type="button" class="btn btn-dark bk-send" id="bkSend" disabled hidden>SEND REQUEST ON WHATSAPP</button>
+        </div>
+        <p class="bk-fine" id="bkFine" hidden>Your request opens in WhatsApp. I&rsquo;ll confirm your slot there.</p>
       </footer>
 
       <div class="bk-done" id="bkDone" hidden>
@@ -369,6 +395,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
   <script src="script.js?v=10"></script>
-  <script src="booking.js?v=4"></script>
+  <script src="booking.js?v=6"></script>
 </body>
 </html>
