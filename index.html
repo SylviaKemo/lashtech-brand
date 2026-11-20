@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thee Shamim Effect | Luxury Lash Studio</title>
+  <meta name="description" content="Thee Shamim Effect: custom lash extensions, lifts and fills, done with precision. Book your lash moment." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=4" />
+</head>
+<body>
+  <!-- faint vertical grid lines, like the inspiration site -->
+  <div class="grid-lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="header">
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="#top" class="logo">THEE SHAMIM EFFECT</a>
+    <a href="#book" class="header-book">BOOK NOW</a>
+  </header>
+
+  <!-- full-screen menu -->
+  <nav class="menu-overlay" id="menu" aria-hidden="true">
+    <ul>
+      <li><a href="#story">My Story</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#prices">Price List</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#studio">The Studio</a></li>
+      <li><a href="#book">Book</a></li>
+    </ul>
+    <p class="serif-note">Lashes, with love.</p>
+  </nav>
+
+  <main id="top">
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="hero">
+      <div class="hero-frame" id="heroFrame">
+        <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/poster.jpg">
+          <source src="assets/hero.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-shade"></div>
+        <div class="hero-content">
+          <h1 class="hero-title">
+            <span class="line"><span>MORE THAN</span></span>
+            <span class="line"><span>JUST LASHES</span></span>
+          </h1>
+          <a href="#book" class="btn btn-light hero-btn">BOOK NOW</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STORY ============ -->
+    <section class="story" id="story">
+      <div class="story-media">
+        <img src="assets/shamim-mirror.jpg" alt="The lash artist behind Thee Shamim Effect" loading="lazy" />
+      </div>
+      <span class="serif-note story-label">My Story</span>
+      <span class="serif-note story-est">Est. 20XX</span>
+      <div class="story-head reveal">
+        <h2 class="display">THE EFFECT<br />IS IN THE<br />DETAILS.</h2>
+        <a href="#book" class="btn btn-dark btn-lg">BOOK NOW</a>
+      </div>
+      <div class="story-body reveal">
+        <p>
+          I'm the lash artist behind Thee Shamim Effect. I started doing lashes because I love
+          that moment when someone opens their eyes, looks in the mirror and feels like the
+          best version of themselves.
+        </p>
+        <p>
+          I map every set to your eye shape, your lifestyle and the look you have been saving
+          on your camera roll. Soft and wispy or full-glam volume, I build lashes that feel
+          weightless and stay looking fresh between fills.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ INDEX LIST WITH HOVER IMAGE ============ -->
+    <section class="index" id="services">
+      <ul class="index-list">
+        <li data-img="assets/set-classic.jpg"><a href="#prices">CLASSIC SETS</a></li>
+        <li data-img="assets/set-hybrid.jpg"><a href="#prices">HYBRID</a></li>
+        <li data-img="assets/set-volume.jpg"><a href="#prices">VOLUME</a></li>
+        <li data-img="assets/set-extras.jpg"><a href="#prices">EXTRAS</a></li>
+        <li data-img="assets/studio-station.jpg"><a href="#portfolio">PORTFOLIO</a></li>
+      </ul>
+      <div class="index-preview">
+        <img id="indexImg" src="assets/set-classic.jpg" alt="Lash set preview" />
+      </div>
+    </section>
+
+    <!-- ============ STUDIO / ACCORDION ============ -->
+    <section class="studio" id="studio">
+      <div class="section-head">
+        <h2 class="display reveal">ONE STUDIO,<br />ENDLESS FLUTTER.</h2>
+        <span class="serif-note">Made with love</span>
+      </div>
+      <div class="accordion">
+        <details class="acc-item" open>
+          <summary>THE STUDIO <span class="chev"></span></summary>
+          <div class="acc-body">
+            <div>
+              <h4 class="serif-note">Address</h4>
+              <p>RNG Plaza or Umoja<br />Nairobi</p>
+            </div>
+            <div>
+              <h4 class="serif-note">Opening Hours</h4>
+              <p>Monday – Friday: 10AM – 5PM<br />Saturday – Sunday: 11AM – 5PM</p>
+            </div>
+            <img src="assets/studio-station.jpg" alt="Lash station with practice head, tweezers, lash trays and eye pads" loading="lazy" style="object-position: center 60%" />
+            <a href="#book" class="btn btn-dark">BOOK NOW</a>
+          </div>
+        </details>
+        <details class="acc-item">
+          <summary>BEFORE YOUR APPOINTMENT <span class="chev"></span></summary>
+          <div class="acc-body single">
+            <p>Arrive with clean, makeup-free eyes. Skip caffeine if you get twitchy, and plan to
+              relax with your eyes closed for 1.5 – 2.5 hours depending on the set.</p>
+            <img src="assets/studio-tools.jpg" alt="Lash tweezers and a spoolie on a heart-shaped mirror" loading="lazy" style="object-position: center 40%" />
+            <a href="#book" class="btn btn-dark">BOOK NOW</a>
+          </div>
+        </details>
+        <details class="acc-item">
+          <summary>AFTERCARE &amp; POLICIES <span class="chev"></span></summary>
+          <div class="acc-body single">
+            <p>Keep lashes dry for 24 hours, brush daily and cleanse with a lash-safe foam.
+              Fills need at least 40% of lashes remaining. A deposit secures every booking and
+              48 hours notice is required to reschedule.</p>
+            <img src="assets/studio-mirror.jpg" alt="Pink Lashes hand mirror with a lash mirror and spoolie" loading="lazy" style="object-position: center 35%" />
+            <a href="#book" class="btn btn-dark">BOOK NOW</a>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ============ PRICE LIST ============ -->
+    <section class="prices" id="prices">
+      <div class="section-head">
+        <div>
+          <span class="serif-note">My Services</span>
+          <h2 class="display reveal">SEE MY<br />PRICE LIST.</h2>
+        </div>
+        <a href="#book" class="btn btn-dark">BOOK NOW</a>
+      </div>
+      <div class="price-table">
+        <div class="price-col">
+          <h3>FULL SETS</h3>
+          <p class="sub">Prices in KSh</p>
+          <p class="fine">Includes consultation and custom lash mapping.</p>
+          <ul>
+            <li><span>Classic</span><span>KSh 600</span></li>
+            <li><span>Hybrid</span><span>KSh 700</span></li>
+            <li><span>Volume</span><span>KSh 900</span></li>
+            <li><span>Mega Volume</span><span>KSh 1,200</span></li>
+          </ul>
+        </div>
+        <div class="price-col">
+          <h3>FILLS</h3>
+          <p class="sub">Every 2 – 3 weeks</p>
+          <p class="fine">40% of lashes must remain for a fill.</p>
+          <ul>
+            <li><span>Classic Fill</span><span>KSh 200</span></li>
+            <li><span>Hybrid Fill</span><span>KSh 200</span></li>
+            <li><span>Volume Fill</span><span>KSh 250</span></li>
+            <li><span>Mega Volume Fill</span><span>KSh 300</span></li>
+          </ul>
+        </div>
+        <div class="price-col">
+          <h3>EXTRAS</h3>
+          <p class="sub">Add to any service</p>
+          <p class="fine">Pricing may vary on availability.</p>
+          <ul>
+            <li><span>Lash Charms</span><span>KSh 100</span></li>
+            <li><span>Glitter Spikes</span><span>KSh 100</span></li>
+            <li><span>Colour Add-On</span><span>KSh 100</span></li>
+            <li><span>Removal</span><span>KSh 300</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PORTFOLIO ============ -->
+    <section class="portfolio" id="portfolio">
+      <div class="section-head">
+        <div>
+          <span class="serif-note">My Portfolio</span>
+          <h2 class="display reveal">WHAT I<br />DO BEST.</h2>
+        </div>
+        <a href="#" class="btn btn-outline">VIEW ALL</a>
+      </div>
+      <div class="carousel" id="carousel">
+        <div class="track" id="track">
+          <figure><img src="assets/set-classic.jpg" alt="Classic lash set" loading="lazy" /></figure>
+          <figure><img src="assets/set-hybrid.jpg" alt="Hybrid lash set" loading="lazy" /></figure>
+          <figure><img src="assets/set-volume.jpg" alt="Volume lash set" loading="lazy" /></figure>
+          <figure><img src="assets/work-01.jpg" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/work-02.jpg" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/work-06.jpg" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/work-07.jpg" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/work-08.jpg" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/work-09.jpg" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/work-10.jpg" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FULL-BLEED CTA ============ -->
+    <section class="cta">
+      <div class="cta-inner">
+        <span class="serif-note light">Join the list</span>
+        <h2 class="display light reveal">BOOK YOUR<br />LASH MOMENT</h2>
+        <a href="#book" class="btn btn-light">BOOK NOW</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" id="book">
+    <div class="footer-grid">
+      <img src="assets/set-classic.jpg" alt="" loading="lazy" />
+      <img src="assets/set-hybrid.jpg" alt="" loading="lazy" />
+      <img src="assets/set-volume.jpg" alt="" loading="lazy" />
+      <img src="assets/studio-mirror.jpg" alt="" loading="lazy" />
+      <img src="assets/set-extras.jpg" alt="" loading="lazy" />
+      <img src="assets/studio-station.jpg" alt="" loading="lazy" />
+    </div>
+    <h2 class="display light">FLUTTER BY.</h2>
+    <a href="#" class="btn btn-light">BOOK NOW</a>
+
+    <div class="footer-info">
+      <div>
+        <span class="serif-note light">Studio</span>
+        <p>RNG Plaza or Umoja<br />Nairobi</p>
+      </div>
+      <div>
+        <span class="serif-note light">Hours</span>
+        <p>Mon – Fri: 10AM – 5PM<br />Sat – Sun: 11AM – 5PM</p>
+      </div>
+      <div>
+        <span class="serif-note light">Say hi</span>
+        <p><a href="#">Instagram</a><br /><a href="#">TikTok</a><br /><a href="mailto:hello@example.com">Email</a></p>
+      </div>
+    </div>
+    <p class="copyright">© <span id="year"></span> Thee Shamim Effect</p>
+  </footer>
+
+  <a href="#book" class="float-book">BOOK<br />NOW</a>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="script.js?v=4"></script>
+</body>
+</html>
