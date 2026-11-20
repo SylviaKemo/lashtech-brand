@@ -389,6 +389,18 @@
     </aside>
   </div>
 
+  <!-- Vercel Web Analytics + Speed Insights.
+       The /_vercel/... scripts only exist on the Vercel deployment (after enabling both
+       in the project dashboard), so they're skipped on local previews to avoid 404s. -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+    if (!/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) && location.protocol !== 'file:') {
+      ['/_vercel/insights/script.js', '/_vercel/speed-insights/script.js'].forEach(function (src) {
+        var s = document.createElement('script'); s.defer = true; s.src = src; document.body.appendChild(s);
+      });
+    }
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
