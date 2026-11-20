@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=8" />
+  <link rel="stylesheet" href="styles.css?v=10" />
 </head>
 <body>
   <!-- faint vertical grid lines, like the inspiration site -->
@@ -66,30 +66,30 @@
       <div class="shop-intro">
         <p>Every strip set is made to order. Pick a look you love from the gallery or bring
           your own idea, and I'll customize the length, fullness and style to suit you.</p>
-        <a href="#book" class="btn btn-dark btn-lg">REQUEST A CUSTOM SET</a>
+        <a href="#book" class="btn btn-dark btn-lg" data-service="strip">REQUEST A CUSTOM SET</a>
       </div>
       <div class="product-grid">
-        <a href="#book" class="look-card reveal" aria-label="Ask for a custom set like look 01">
+        <a href="#book" class="look-card reveal" data-service="strip" data-look="01" aria-label="Ask for a custom set like look 01">
           <img src="assets/product-01.jpg" alt="Custom strip lash look 01 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
-        <a href="#book" class="look-card reveal" aria-label="Ask for a custom set like look 02">
+        <a href="#book" class="look-card reveal" data-service="strip" data-look="02" aria-label="Ask for a custom set like look 02">
           <img src="assets/product-02.jpg" alt="Custom strip lash look 02 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
-        <a href="#book" class="look-card reveal" aria-label="Ask for a custom set like look 03">
+        <a href="#book" class="look-card reveal" data-service="strip" data-look="03" aria-label="Ask for a custom set like look 03">
           <img src="assets/product-03.jpg" alt="Custom strip lash look 03 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
-        <a href="#book" class="look-card reveal" aria-label="Ask for a custom set like look 04">
+        <a href="#book" class="look-card reveal" data-service="strip" data-look="04" aria-label="Ask for a custom set like look 04">
           <img src="assets/product-04.jpg" alt="Custom strip lash look 04 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
-        <a href="#book" class="look-card reveal" aria-label="Ask for a custom set like look 05">
+        <a href="#book" class="look-card reveal" data-service="strip" data-look="05" aria-label="Ask for a custom set like look 05">
           <img src="assets/product-05.jpg" alt="Custom strip lash look 05 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
-        <a href="#book" class="look-card reveal" aria-label="Ask for a custom set like look 06">
+        <a href="#book" class="look-card reveal" data-service="strip" data-look="06" aria-label="Ask for a custom set like look 06">
           <img src="assets/product-06.jpg" alt="Custom strip lash look 06 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
@@ -260,7 +260,7 @@
       <img src="assets/studio-station.jpg" alt="" loading="lazy" />
     </div>
     <h2 class="display light">FLUTTER BY.</h2>
-    <a href="#" class="btn btn-light">BOOK NOW</a>
+    <a href="#book" class="btn btn-light">BOOK NOW</a>
 
     <div class="footer-info">
       <div>
@@ -281,9 +281,75 @@
 
   <a href="#book" class="float-book">BOOK<br />NOW</a>
 
+
+  <!-- ============ BOOKING PANEL (opens from every BOOK NOW link) ============ -->
+  <div class="booking" id="booking" aria-hidden="true">
+    <div class="booking-backdrop" data-close></div>
+    <aside class="booking-panel" role="dialog" aria-modal="true" aria-labelledby="bookingTitle" data-lenis-prevent>
+      <div class="booking-scroll">
+        <header class="booking-head">
+          <span class="serif-note">Book an appointment</span>
+          <button type="button" class="booking-close" data-close aria-label="Close booking">&times;</button>
+        </header>
+        <h2 id="bookingTitle" class="booking-title">BOOK YOUR<br />LASH MOMENT.</h2>
+
+        <form id="bookingForm" class="booking-form" novalidate>
+          <fieldset class="bk-step">
+            <legend><span class="bk-num">01</span>Service</legend>
+            <div class="bk-options" id="bkServices"></div>
+          </fieldset>
+
+          <fieldset class="bk-step" id="bkExtrasStep">
+            <legend><span class="bk-num">02</span>Extras <em>optional</em></legend>
+            <div class="bk-options bk-options--small" id="bkExtras"></div>
+          </fieldset>
+
+          <fieldset class="bk-step">
+            <legend><span class="bk-num">03</span>Location</legend>
+            <div class="bk-options" id="bkLocations"></div>
+          </fieldset>
+
+          <fieldset class="bk-step">
+            <legend><span class="bk-num">04</span>Date</legend>
+            <div class="bk-dates" id="bkDates"></div>
+          </fieldset>
+
+          <fieldset class="bk-step">
+            <legend><span class="bk-num">05</span>Time</legend>
+            <div class="bk-times" id="bkTimes"><p class="bk-hint">Pick a date to see open times.</p></div>
+          </fieldset>
+
+          <fieldset class="bk-step">
+            <legend><span class="bk-num">06</span>Your details</legend>
+            <label class="bk-field"><span>Name</span><input type="text" id="bkName" name="name" autocomplete="name" /></label>
+            <label class="bk-field"><span>Notes <em>optional</em></span><textarea id="bkNotes" name="notes" rows="3" placeholder="Lash look, allergies, anything I should know"></textarea></label>
+          </fieldset>
+        </form>
+      </div>
+
+      <footer class="booking-summary">
+        <div class="bk-total"><span class="serif-note">Estimated total</span><strong id="bkTotal">&mdash;</strong></div>
+        <p class="bk-missing" id="bkMissing" aria-live="polite"></p>
+        <button type="button" class="btn btn-dark bk-send" id="bkSend" disabled>SEND REQUEST ON WHATSAPP</button>
+        <p class="bk-fine">Your request opens in WhatsApp. I&rsquo;ll confirm your slot there.</p>
+      </footer>
+
+      <div class="bk-done" id="bkDone" hidden>
+        <span class="serif-note">Almost there</span>
+        <h3 class="booking-title">REQUEST<br />READY.</h3>
+        <p>Your booking request is written out in WhatsApp. Tap send there and I&rsquo;ll confirm your slot as soon as I can.</p>
+        <div class="bk-done-actions">
+          <button type="button" class="btn btn-dark" id="bkReopen">OPEN WHATSAPP AGAIN</button>
+          <button type="button" class="btn btn-outline" data-close>BACK TO SITE</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=5"></script>
+  <script src="booking.js?v=4"></script>
 </body>
 </html>

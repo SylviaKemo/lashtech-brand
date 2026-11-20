@@ -16,7 +16,7 @@ if (animate && typeof Lenis !== 'undefined') {
 document.querySelectorAll('a[href^="#"]').forEach((a) => {
   a.addEventListener('click', (e) => {
     const id = a.getAttribute('href');
-    if (id.length < 2) return;
+    if (id.length < 2 || id === '#book') return; // #book opens the booking panel (booking.js)
     const target = document.querySelector(id);
     if (!target) return;
     e.preventDefault();
