@@ -12,6 +12,64 @@ if (animate && typeof Lenis !== 'undefined') {
   gsap.ticker.lagSmoothing(0);
 }
 
+// ---------- Loading screen → hero video → headline ----------
+// The loader stays up until the hero video is actually playing (or MAX_WAIT passes,
+// e.g. on a slow connection or when the phone blocks autoplay). Then it fades out
+// and the headline rises in a moment later, over a video that's already moving.
+(() => {
+  const MAX_WAIT = 4000;   // never keep visitors waiting longer than this
+  const TEXT_DELAY = 600;  // pause between the loader fading and the headline rising
+  const hero = document.getElementById('hero');
+  const video = hero.querySelector('.hero-video');
+  const loader = document.getElementById('loader');
+  const bar = document.getElementById('loaderBar');
+  let done = false;
+
+  const lockScroll = (on) => {
+    document.documentElement.style.overflow = on ? 'hidden' : '';
+    if (lenis) on ? lenis.stop() : lenis.start();
+  };
+  const setProgress = (p) => { bar.style.transform = `scaleX(${Math.min(1, Math.max(0, p))})`; };
+
+  const finish = () => {
+    if (done) return;
+    done = true;
+    setProgress(1);
+    setTimeout(() => {
+      loader.classList.add('is-done');
+      lockScroll(false);
+      setTimeout(() => hero.classList.add('is-ready'), TEXT_DELAY);
+    }, 250);
+  };
+
+  const onPlaying = () => { video.classList.add('is-playing'); finish(); };
+
+  // Skip the empty opening of the clip: play from HERO_START (just before the hand
+  // comes in) and loop back to it instead of to 0. The file itself is unchanged.
+  const HERO_START = 1.8;
+  const toStart = () => { if (video.currentTime < HERO_START) video.currentTime = HERO_START; };
+  video.addEventListener('loadedmetadata', toStart);
+  if (video.readyState >= 1) toStart();
+  video.addEventListener('timeupdate', () => {
+    if (video.duration && video.currentTime >= video.duration - 0.12) video.currentTime = HERO_START;
+  });
+  video.addEventListener('ended', () => { video.currentTime = HERO_START; video.play().catch(() => {}); });
+
+  lockScroll(true);
+  setProgress(0.15);
+  video.addEventListener('playing', onPlaying, { once: true });
+  video.addEventListener('progress', () => {
+    if (video.duration && video.buffered.length) {
+      setProgress(0.15 + 0.85 * (video.buffered.end(video.buffered.length - 1) / video.duration));
+    }
+  });
+  video.addEventListener('error', finish);
+  // already playing from cache before this script ran
+  if (!video.paused && video.readyState >= 3) onPlaying();
+  else video.play?.().catch(() => {}); // autoplay blocked → the timeout below shows the poster instead
+  setTimeout(finish, MAX_WAIT);
+})();
+
 // In-page links go through Lenis so they glide instead of jumping
 document.querySelectorAll('a[href^="#"]').forEach((a) => {
   a.addEventListener('click', (e) => {

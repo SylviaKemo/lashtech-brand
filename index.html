@@ -8,9 +8,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=10" />
+  <link rel="preload" as="image" href="assets/poster.jpg" />
+  <link rel="stylesheet" href="styles.css?v=11" />
+  <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
+  <!-- loading screen: hides once the hero video is playing (or after a few seconds) -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <span class="loader-logo">THEE SHAMIM EFFECT</span>
+    <span class="loader-bar"><i id="loaderBar"></i></span>
+  </div>
   <!-- faint vertical grid lines, like the inspiration site -->
   <div class="grid-lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
@@ -41,8 +48,8 @@
     <!-- ============ HERO ============ -->
     <section class="hero" id="hero">
       <div class="hero-frame" id="heroFrame">
-        <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/poster.jpg">
-          <source src="assets/hero.mp4" type="video/mp4" />
+        <video class="hero-video" autoplay muted playsinline preload="auto" poster="assets/poster.jpg">
+          <source src="assets/hero.mp4#t=1.8" type="video/mp4" />
         </video>
         <div class="hero-shade"></div>
         <div class="hero-content">
@@ -349,7 +356,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=7"></script>
   <script src="booking.js?v=4"></script>
 </body>
 </html>
