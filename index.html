@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="assets/poster.jpg" />
-  <link rel="stylesheet" href="styles.css?v=11" />
+  <link rel="stylesheet" href="styles.css?v=12" />
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -177,47 +177,68 @@
       </div>
     </section>
 
-    <!-- ============ STUDIO / ACCORDION ============ -->
+    <!-- ============ STUDIO / COLLAPSING CARDS ============ -->
     <section class="studio" id="studio">
       <div class="section-head">
         <h2 class="display reveal">ONE STUDIO,<br />ENDLESS FLUTTER.</h2>
         <span class="serif-note">Made with love</span>
       </div>
-      <div class="accordion">
-        <details class="acc-item" open>
-          <summary>THE STUDIO <span class="chev"></span></summary>
-          <div class="acc-body">
-            <div>
-              <h4 class="serif-note">Address</h4>
-              <p>Terry House, Mfangano Street<br />or Umoja Springboard<br />Nairobi</p>
+      <!-- Collapsing cards: hover (desktop), tap (phone) or focus (keyboard) opens a card -->
+      <div class="cc-cards" id="studioCards">
+        <article class="cc-card active" tabindex="0" aria-expanded="true" aria-label="The Studio">
+          <div class="cc-img" style="background-image: url('assets/studio-station.jpg'); background-position: center 60%;" role="img" aria-label="Lash station with practice head, tweezers, lash trays and eye pads"></div>
+          <div class="cc-v-title" aria-hidden="true">The Studio</div>
+          <div class="cc-content">
+            <div class="cc-idx">01 / 03</div>
+            <div class="cc-meta">
+              <div class="cc-body">
+                <h3 class="cc-title">THE STUDIO</h3>
+                <div class="cc-text cc-cols">
+                  <div>
+                    <h4 class="serif-note light">Address</h4>
+                    <p>Terry House, Mfangano Street<br />or Umoja Springboard<br />Nairobi</p>
+                  </div>
+                  <div>
+                    <h4 class="serif-note light">Opening Hours</h4>
+                    <p>Monday – Friday: 10AM – 5PM<br />Saturday – Sunday: 11AM – 5PM</p>
+                  </div>
+                </div>
+              </div>
+              <a href="#book" class="cc-cta">BOOK NOW <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
             </div>
-            <div>
-              <h4 class="serif-note">Opening Hours</h4>
-              <p>Monday – Friday: 10AM – 5PM<br />Saturday – Sunday: 11AM – 5PM</p>
+          </div>
+        </article>
+        <article class="cc-card" tabindex="0" aria-expanded="false" aria-label="Before your appointment">
+          <div class="cc-img" style="background-image: url('assets/studio-tools.jpg'); background-position: center 40%;" role="img" aria-label="Lash tweezers and a spoolie on a heart-shaped mirror"></div>
+          <div class="cc-v-title" aria-hidden="true">Before You Come</div>
+          <div class="cc-content">
+            <div class="cc-idx">02 / 03</div>
+            <div class="cc-meta">
+              <div class="cc-body">
+                <h3 class="cc-title">BEFORE YOUR APPOINTMENT</h3>
+                <p class="cc-text">Arrive with clean, makeup-free eyes. Skip caffeine if you get twitchy, and plan to
+                  relax with your eyes closed for 30 – 40 minutes depending on the set.</p>
+              </div>
+              <a href="#book" class="cc-cta">BOOK NOW <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
             </div>
-            <img src="assets/studio-station.jpg" alt="Lash station with practice head, tweezers, lash trays and eye pads" loading="lazy" style="object-position: center 60%" />
-            <a href="#book" class="btn btn-dark">BOOK NOW</a>
           </div>
-        </details>
-        <details class="acc-item">
-          <summary>BEFORE YOUR APPOINTMENT <span class="chev"></span></summary>
-          <div class="acc-body single">
-            <p>Arrive with clean, makeup-free eyes. Skip caffeine if you get twitchy, and plan to
-              relax with your eyes closed for 30 – 40 minutes depending on the set.</p>
-            <img src="assets/studio-tools.jpg" alt="Lash tweezers and a spoolie on a heart-shaped mirror" loading="lazy" style="object-position: center 40%" />
-            <a href="#book" class="btn btn-dark">BOOK NOW</a>
+        </article>
+        <article class="cc-card" tabindex="0" aria-expanded="false" aria-label="Aftercare and policies">
+          <div class="cc-img" style="background-image: url('assets/studio-mirror.jpg'); background-position: center 35%;" role="img" aria-label="Pink Lashes hand mirror with a lash mirror and spoolie"></div>
+          <div class="cc-v-title" aria-hidden="true">Aftercare</div>
+          <div class="cc-content">
+            <div class="cc-idx">03 / 03</div>
+            <div class="cc-meta">
+              <div class="cc-body">
+                <h3 class="cc-title">AFTERCARE &amp; POLICIES</h3>
+                <p class="cc-text">Keep lashes dry for 24 hours, brush daily and cleanse with a lash-safe foam.
+                  Fills need at least 40% of lashes remaining. A deposit secures every booking and
+                  48 hours notice is required to reschedule.</p>
+              </div>
+              <a href="#book" class="cc-cta">BOOK NOW <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+            </div>
           </div>
-        </details>
-        <details class="acc-item">
-          <summary>AFTERCARE &amp; POLICIES <span class="chev"></span></summary>
-          <div class="acc-body single">
-            <p>Keep lashes dry for 24 hours, brush daily and cleanse with a lash-safe foam.
-              Fills need at least 40% of lashes remaining. A deposit secures every booking and
-              48 hours notice is required to reschedule.</p>
-            <img src="assets/studio-mirror.jpg" alt="Pink Lashes hand mirror with a lash mirror and spoolie" loading="lazy" style="object-position: center 35%" />
-            <a href="#book" class="btn btn-dark">BOOK NOW</a>
-          </div>
-        </details>
+        </article>
       </div>
     </section>
 
@@ -356,7 +377,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js?v=8"></script>
+  <script src="script.js?v=10"></script>
   <script src="booking.js?v=4"></script>
 </body>
 </html>

@@ -231,32 +231,74 @@ section { padding: clamp(80px, 12vw, 160px) var(--gutter); }
 .index-preview img { width: 100%; height: 100%; object-fit: cover; transition: opacity .35s ease, transform .6s ease; }
 .index-preview img.swap { opacity: 0; transform: scale(1.04); }
 
-/* ---------- accordion ---------- */
-.acc-item { border-top: 1px solid var(--ink); }
-.acc-item:last-child { border-bottom: 1px solid var(--ink); }
-.acc-item summary {
-  list-style: none; cursor: pointer;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 14px 0;
-  font-variation-settings: "wdth" 125; font-weight: 800; font-size: clamp(1rem, 1.6vw, 1.35rem);
+/* ---------- studio: collapsing cards ---------- */
+/* Hovering (desktop), tapping (phone) or focusing (keyboard) a card widens it;
+   the others collapse to a slim strip with a vertical label. */
+.cc-cards {
+  display: flex; gap: 10px;
+  height: clamp(460px, 72vh, 640px);
 }
-.acc-item summary::-webkit-details-marker { display: none; }
-.chev { width: 10px; height: 10px; border-right: 1.5px solid; border-bottom: 1.5px solid; transform: rotate(45deg); transition: transform .3s; }
-.acc-item[open] .chev { transform: rotate(-135deg); }
-.acc-body {
-  display: grid; grid-template-columns: 1fr 1fr 1.4fr; gap: var(--gutter);
-  padding: 8px 0 28px; font-size: 0.9rem; line-height: 1.5;
+.cc-card {
+  position: relative; flex: 0.7; min-width: 92px;
+  border-radius: 14px; overflow: hidden; cursor: pointer;
+  background: #1a1a1c; color: #fff;
+  transition: flex .75s cubic-bezier(.2, 1, .3, 1);
+  will-change: flex;
 }
-.acc-body h4 { margin-bottom: 6px; }
-.acc-body img { grid-column: 3; grid-row: 1 / span 2; width: 100%; aspect-ratio: 16/9; max-height: 240px; object-fit: cover; }
-.acc-body .btn { justify-self: start; align-self: end; }
-.acc-body.single p { grid-column: 1 / 3; grid-row: 1; max-width: 60ch; color: var(--muted); }
-.acc-body.single .btn { grid-column: 1; grid-row: 2; }
-/* smooth open/close (height is animated from script.js) */
-.acc-body { overflow: hidden; }
-.acc-item.is-closing .chev { transform: rotate(45deg); }
-.acc-item summary { transition: color .3s ease; }
-.acc-item summary:hover { color: var(--pink-title); }
+.cc-card.active { flex: 2.6; cursor: default; }
+.cc-card:focus-visible { outline: 2px solid var(--pink-title); outline-offset: 3px; }
+.cc-img {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  transform: scale(1.04); filter: grayscale(30%) brightness(.75);
+  transition: transform .9s cubic-bezier(.2, 1, .3, 1), filter .75s cubic-bezier(.2, 1, .3, 1);
+}
+.cc-card.active .cc-img { transform: scale(1); filter: grayscale(0%) brightness(.9); }
+.cc-card::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to top, rgba(20,10,14,.85) 0%, rgba(20,10,14,.45) 38%, rgba(20,10,14,.08) 62%, rgba(20,10,14,.4) 100%);
+}
+.cc-content {
+  position: relative; z-index: 2; height: 100%;
+  padding: 24px; display: flex; flex-direction: column;
+}
+.cc-idx { font-family: var(--serif); font-size: 1rem; color: rgba(255,255,255,.8); }
+.cc-meta {
+  margin-top: auto;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 20px;
+}
+.cc-body { max-width: 560px; }
+.cc-title {
+  font-variation-settings: "wdth" 125; font-weight: 800;
+  font-size: clamp(1.2rem, 2vw, 1.9rem); line-height: 1; margin-bottom: 14px;
+}
+.cc-text { font-size: .9rem; line-height: 1.55; color: rgba(255,255,255,.88); }
+.cc-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.cc-cols h4 { margin-bottom: 6px; color: rgba(255,255,255,.75); }
+/* the active card's title, text and button rise in once the card has opened */
+.cc-title, .cc-text, .cc-cta {
+  opacity: 0; transform: translateY(8px);
+  transition: opacity .35s ease, transform .5s cubic-bezier(.2, 1, .3, 1);
+}
+.cc-card.active .cc-title { opacity: 1; transform: none; transition-delay: .15s; }
+.cc-card.active .cc-text { opacity: 1; transform: none; transition-delay: .22s; }
+.cc-card.active .cc-cta { opacity: 1; transform: none; transition-delay: .28s; }
+.cc-card:not(.active) .cc-meta { visibility: hidden; transition: visibility 0s .35s; }
+.cc-v-title {
+  position: absolute; left: 24px; bottom: 24px; z-index: 2;
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font-variation-settings: "wdth" 125; font-weight: 800; font-size: .85rem;
+  letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.9);
+  white-space: nowrap; transition: opacity .3s ease;
+}
+.cc-card.active .cc-v-title { opacity: 0; }
+.cc-cta {
+  flex-shrink: 0; display: inline-flex; align-items: center; gap: 8px;
+  background: #fff; color: var(--ink); padding: .7em 1em;
+  font-variation-settings: "wdth" 115; font-weight: 800; font-size: .78rem; letter-spacing: .02em;
+}
+.cc-cta:hover { background: var(--pink); }
+.cc-cta svg { width: 13px; height: 13px; }
 
 /* ---------- strip lash inspiration gallery ---------- */
 .shop-intro {
@@ -464,7 +506,7 @@ html.lenis, html.lenis body { height: auto; }
   .lead { font-size: calc(1rem + 2px); }
   .shop-intro p { font-size: calc(1rem + 2px); }
   .story-body { font-size: calc(clamp(0.9rem, 1vw, 1.05rem) + 2px); }
-  .acc-body { font-size: calc(0.9rem + 2px); }
+  .cc-text { font-size: calc(0.9rem + 2px); }
   .price-col .sub { font-size: calc(0.8rem + 2px); }
   .price-col .fine { font-size: calc(0.72rem + 2px); }
   .price-col ul { font-size: calc(0.85rem + 2px); }
@@ -482,10 +524,7 @@ html.lenis, html.lenis body { height: auto; }
   .story-head { grid-column: 1 / -1; grid-row: 3; padding-left: 0; }
   .story-body { grid-column: 1 / -1; grid-row: 4; padding-left: 0; }
   .index-preview { display: none; }
-  .acc-body { grid-template-columns: 1fr 1fr; }
-  .acc-body img, .acc-body.single img { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 16/9; max-height: 200px; }
-  .acc-body.single p { grid-column: 1 / -1; }
-  .acc-body.single .btn { grid-row: auto; }
+  .cc-meta { flex-direction: column; align-items: flex-start; gap: 16px; }
   .price-table { grid-template-columns: 1fr; }
   .price-col { min-height: 0; }
   .price-col ul { margin-top: 24px; }
@@ -499,7 +538,14 @@ html.lenis, html.lenis body { height: auto; }
 }
 @media (max-width: 520px) {
   .section-head { flex-direction: column; align-items: flex-start; }
-  .acc-body { grid-template-columns: 1fr; }
+  /* phones: cards stack vertically; the open one takes most of the height */
+  .cc-cards { flex-direction: column; gap: 6px; height: 640px; }
+  .cc-card { flex: 0.55; min-width: 0; min-height: 0; }
+  .cc-card.active { flex: 4; }
+  .cc-v-title { writing-mode: horizontal-tb; transform: none; left: 16px; bottom: auto; top: 50%; translate: 0 -50%; }
+  .cc-content { padding: 16px; }
+  .cc-idx { display: none; }
+  .cc-cols { grid-template-columns: 1fr; gap: 10px; }
   .header-book { visibility: hidden; } /* floating button covers booking on phones */
 }
 @media (prefers-reduced-motion: reduce) {

@@ -136,6 +136,28 @@ if (animate) {
     .to('.hero-video', { scale: 1.12, ease: 'none' }, 0)
     .to('.hero-content', { yPercent: -40, scale: 0.85, opacity: 0, ease: 'power1.in' }, 0);
 
+  // My Work: once the photo row is fully on screen, the section holds in place and
+  // scrolling down slides the row sideways through every photo. After the last one,
+  // the page carries on to the next section. (Created before the triggers further
+  // down the page so their positions account for the extra scroll distance.)
+  const workRow = document.getElementById('carousel');
+  const workTrack = document.getElementById('track');
+  const workDistance = () => Math.max(0, workTrack.scrollWidth - workRow.clientWidth);
+  workTrack.style.transition = 'none'; // the scroll drives it now, not the timed slide
+  gsap.to(workTrack, {
+    x: () => -workDistance(),
+    ease: 'none',
+    scrollTrigger: {
+      trigger: workRow,
+      pin: '#portfolio',
+      start: 'bottom bottom-=24',
+      end: () => `+=${workDistance()}`,
+      scrub: 0.8,
+      invalidateOnRefresh: true,
+      anticipatePin: 1,
+    },
+  });
+
   // 6. Pink headings fill in line by line, left to right, as you scroll
   document.querySelectorAll('.display:not(.light)').forEach((h) => {
     h.classList.remove('reveal');
@@ -160,58 +182,21 @@ if (animate) {
   window.addEventListener('load', () => ScrollTrigger.refresh());
 }
 
-// ---------- Studio drop-downs: smooth open/close, only one open at a time ----------
-const accItems = [...document.querySelectorAll('.acc-item')];
-const ACC_EASE = 'cubic-bezier(.2,.8,.2,1)';
-const refreshTriggers = () => window.ScrollTrigger && ScrollTrigger.refresh();
-
-const openItem = (d) => {
-  const body = d.querySelector('.acc-body');
-  d.getAnimations?.({ subtree: true }).forEach((a) => a.cancel());
-  d.classList.remove('is-closing');
-  d.open = true;
-  if (reduceMotion) return refreshTriggers();
-  const { paddingTop, paddingBottom } = getComputedStyle(body);
-  const h = body.offsetHeight;
-  body.animate(
-    [
-      { height: '0px', paddingTop: '0px', paddingBottom: '0px', opacity: 0 },
-      { height: `${h}px`, paddingTop, paddingBottom, opacity: 1 },
-    ],
-    { duration: 550, easing: ACC_EASE }
-  ).onfinish = refreshTriggers;
-  // content drifts up slightly as it appears
-  [...body.children].forEach((el, i) =>
-    el.animate(
-      [{ transform: 'translateY(14px)', opacity: 0 }, { transform: 'none', opacity: 1 }],
-      { duration: 500, delay: 80 + i * 50, easing: ACC_EASE, fill: 'backwards' }
-    )
-  );
-};
-
-const closeItem = (d) => {
-  if (!d.open) return;
-  const body = d.querySelector('.acc-body');
-  if (reduceMotion) { d.open = false; return refreshTriggers(); }
-  d.classList.add('is-closing');
-  const { paddingTop, paddingBottom } = getComputedStyle(body);
-  const anim = body.animate(
-    [
-      { height: `${body.offsetHeight}px`, paddingTop, paddingBottom, opacity: 1 },
-      { height: '0px', paddingTop: '0px', paddingBottom: '0px', opacity: 0 },
-    ],
-    { duration: 450, easing: ACC_EASE }
-  );
-  anim.onfinish = () => { d.open = false; d.classList.remove('is-closing'); refreshTriggers(); };
-};
-
-accItems.forEach((d) => {
-  d.querySelector('summary').addEventListener('click', (e) => {
-    e.preventDefault();
-    if (d.open && !d.classList.contains('is-closing')) return closeItem(d);
-    accItems.forEach((o) => o !== d && closeItem(o));
-    openItem(d);
+// ---------- Studio collapsing cards: one card open at a time ----------
+// Desktop: hovering a card opens it. Phone: tapping it. Keyboard: focusing it (Tab).
+const studioCards = [...document.querySelectorAll('#studioCards .cc-card')];
+const openStudioCard = (card) => {
+  studioCards.forEach((c) => {
+    const on = c === card;
+    c.classList.toggle('active', on);
+    c.setAttribute('aria-expanded', on);
   });
+};
+const canHover = window.matchMedia('(hover: hover)').matches;
+studioCards.forEach((card) => {
+  if (canHover) card.addEventListener('mouseenter', () => openStudioCard(card));
+  card.addEventListener('click', () => openStudioCard(card));
+  card.addEventListener('focusin', () => openStudioCard(card));
 });
 
 // ---------- Fade-up for everything else ----------
@@ -238,18 +223,22 @@ items.forEach((li) => {
 items[0]?.classList.add('active');
 
 // ---------- Portfolio carousel: auto-advances one tile at a time, loops ----------
-const track = document.getElementById('track');
-let index = 0;
-const step = () => {
-  const tiles = track.children;
-  const perView = window.innerWidth <= 860 ? 1 : 3;
-  const max = tiles.length - perView;
-  index = index >= max ? 0 : index + 1;
-  track.style.transform = `translateX(-${tiles[0].offsetWidth * index}px)`;
-};
-let timer = setInterval(step, 3000);
-track.addEventListener('mouseenter', () => clearInterval(timer));
-track.addEventListener('mouseleave', () => (timer = setInterval(step, 3000)));
-window.addEventListener('resize', () => { index = -1; step(); });
+// Only used when scroll animations are off (reduced motion / GSAP unavailable);
+// otherwise the scroll moves the row (see "My Work" above).
+if (!animate) {
+  const track = document.getElementById('track');
+  let index = 0;
+  const step = () => {
+    const tiles = track.children;
+    const perView = window.innerWidth <= 860 ? 1 : 3;
+    const max = tiles.length - perView;
+    index = index >= max ? 0 : index + 1;
+    track.style.transform = `translateX(-${tiles[0].offsetWidth * index}px)`;
+  };
+  let timer = setInterval(step, 3000);
+  track.addEventListener('mouseenter', () => clearInterval(timer));
+  track.addEventListener('mouseleave', () => (timer = setInterval(step, 3000)));
+  window.addEventListener('resize', () => { index = -1; step(); });
+}
 
 document.getElementById('year').textContent = new Date().getFullYear();
