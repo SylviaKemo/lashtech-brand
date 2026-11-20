@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Instrument+Serif&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="assets/poster.jpg" />
-  <link rel="stylesheet" href="styles.css?v=20" />
+  <link rel="stylesheet" href="styles.css?v=23" />
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -304,13 +304,12 @@
   <!-- ============ BOOKING PANEL (opens from every BOOK NOW link) ============ -->
   <div class="booking" id="booking" aria-hidden="true">
     <div class="booking-backdrop" data-close></div>
-    <aside class="booking-panel" role="dialog" aria-modal="true" aria-labelledby="bookingTitle" data-lenis-prevent>
+    <aside class="booking-panel" role="dialog" aria-modal="true" aria-label="Book an appointment" data-lenis-prevent>
       <div class="booking-scroll">
         <header class="booking-head">
           <span class="serif-note">Book an appointment</span>
           <button type="button" class="booking-close" data-close aria-label="Close booking">&times;</button>
         </header>
-        <h2 id="bookingTitle" class="booking-title">BOOK YOUR<br />LASH MOMENT.</h2>
 
         <!-- step progress: completed steps can be clicked to go back -->
         <ol class="bk-progress" id="bkProgress" aria-label="Booking steps">

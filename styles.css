@@ -408,7 +408,7 @@ section { padding: clamp(80px, 12vw, 160px) var(--gutter); }
   background: none; border: 0; border-top: 3px solid #e4dbd9; padding: 10px 0 2px;
   color: #b9adab; cursor: default; transition: color .3s, border-color .3s;
 }
-.bk-progress svg { width: 22px; height: 22px; }
+.bk-progress svg { width: 16px; height: 16px; }
 .bk-progress li.is-done button { border-color: var(--pink-title); color: var(--pink-title); cursor: pointer; }
 .bk-progress li.is-done button:hover { color: var(--ink); }
 .bk-progress li.is-current button { border-color: var(--ink); color: var(--ink); }
@@ -439,6 +439,8 @@ section { padding: clamp(80px, 12vw, 160px) var(--gutter); }
   font-variation-settings: "wdth" 125; font-weight: 800; font-size: .95rem;
 }
 .bk-step legend em, .bk-field em { font-family: var(--wide); font-style: normal; font-weight: 500; color: var(--muted); font-variation-settings: normal; }
+/* no divider lines between sections inside the booking steps */
+.bk-panel .bk-step { border-top: 0; }
 .bk-panel > .bk-step:first-child { margin-top: 6px; }
 .bk-num { display: none; font-family: var(--wide); font-weight: 500; color: var(--pink-title); margin-right: 10px; font-variation-settings: normal; }
 .bk-options { clear: both; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
