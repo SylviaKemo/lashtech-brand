@@ -70,7 +70,24 @@ if (animate && typeof Lenis !== 'undefined') {
   setTimeout(finish, MAX_WAIT);
 })();
 
-// In-page links go through Lenis so they glide instead of jumping
+// In-page links (navbar, menu, buttons) glide to their section with Lenis.
+// Menu links close the menu first: Lenis is paused while the menu is open,
+// so the scroll is started after resuming it (force: true covers the same tick).
+const HEADER_OFFSET = () => -(document.getElementById('header').offsetHeight - 1);
+const scrollToSection = (target, { fromMenu = false } = {}) => {
+  if (lenis) {
+    lenis.start();
+    lenis.scrollTo(target, {
+      offset: target.id === 'top' ? 0 : HEADER_OFFSET(),
+      duration: fromMenu ? 1.6 : 1.2,
+      easing: (t) => 1 - Math.pow(1 - t, 4),
+      force: true,
+    });
+  } else {
+    const y = target.getBoundingClientRect().top + window.scrollY + (target.id === 'top' ? 0 : HEADER_OFFSET());
+    window.scrollTo({ top: y, behavior: reduceMotion ? 'auto' : 'smooth' });
+  }
+};
 document.querySelectorAll('a[href^="#"]').forEach((a) => {
   a.addEventListener('click', (e) => {
     const id = a.getAttribute('href');
@@ -78,8 +95,10 @@ document.querySelectorAll('a[href^="#"]').forEach((a) => {
     const target = document.querySelector(id);
     if (!target) return;
     e.preventDefault();
-    if (lenis) lenis.scrollTo(target);
-    else target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    const fromMenu = document.body.classList.contains('menu-open');
+    if (fromMenu) setMenu(false);
+    scrollToSection(target, { fromMenu });
+    history.replaceState(null, '', id); // keep the address bar in sync without a jump
   });
 });
 
@@ -100,7 +119,6 @@ const setMenu = (open) => {
   if (lenis) open ? lenis.stop() : lenis.start();
 };
 toggle.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
-menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
 document.addEventListener('keydown', (e) => e.key === 'Escape' && setMenu(false));
 
 // ---------- Scroll animations ----------
