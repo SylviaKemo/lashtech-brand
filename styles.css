@@ -163,38 +163,15 @@ main, footer { position: relative; z-index: 1; }
   text-shadow: 0 2px 30px rgba(0,0,0,.15);
 }
 .hero-title .line { display: block; overflow: hidden; }
-.hero-title .line > span { display: inline-block; }
-.hero-btn { margin-top: 18px; }
-/* with JS on, the headline waits until the video is playing (.hero.is-ready) */
-.js .hero-title .line > span { transform: translateY(105%); }
-.js .hero-btn { opacity: 0; }
-.js .hero.is-ready .hero-title .line > span { animation: rise 1.1s cubic-bezier(.2,.8,.2,1) forwards; }
-.js .hero.is-ready .hero-title .line:nth-child(2) > span { animation-delay: .15s; }
-.js .hero.is-ready .hero-btn { animation: fade .8s .7s forwards; }
+/* headline rises in as soon as the page appears (no waiting on the video) */
+.hero-title .line > span {
+  display: inline-block; transform: translateY(105%);
+  animation: rise 0.9s cubic-bezier(.2,.8,.2,1) 0.1s forwards;
+}
+.hero-title .line:nth-child(2) > span { animation-delay: .22s; }
+.hero-btn { margin-top: 18px; opacity: 0; animation: fade .7s .5s forwards; }
 @keyframes rise { to { transform: translateY(0); } }
 @keyframes fade { to { opacity: 1; } }
-
-/* ---------- loading screen ---------- */
-.loader { display: none; }
-.js .loader {
-  position: fixed; inset: 0; z-index: 100;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
-  background: var(--bg);
-  transition: opacity .7s ease, visibility .7s ease;
-}
-.loader.is-done { opacity: 0; visibility: hidden; }
-.loader-logo {
-  font-variation-settings: "wdth" 125; font-weight: 800; letter-spacing: .08em;
-  font-size: clamp(1rem, 2.4vw, 1.6rem); color: var(--pink-title);
-  animation: loaderPulse 1.6s ease-in-out infinite;
-}
-.loader-bar { width: min(220px, 60vw); height: 2px; background: #e4dbd9; overflow: hidden; }
-.loader-bar i {
-  display: block; height: 100%; background: var(--pink-title);
-  transform-origin: left; transform: scaleX(0); transition: transform .4s ease;
-}
-@keyframes loaderPulse { 50% { opacity: .45; } }
-
 
 /* ---------- section scaffolding ---------- */
 section { padding: clamp(80px, 12vw, 160px) var(--gutter); }
@@ -591,8 +568,8 @@ html.lenis, html.lenis body { height: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  .hero-title .line > span, .js .hero-title .line > span { transform: none; }
-  .hero-btn, .js .hero-btn, .reveal { opacity: 1; transform: none; }
+  .hero-title .line > span { transform: none; }
+  .hero-btn, .reveal { opacity: 1; transform: none; }
 }
 
 .bk-step legend:focus { outline: none; }

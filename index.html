@@ -7,18 +7,14 @@
   <meta name="description" content="Thee Shamim Effect: custom lash extensions and strip lashes, done with precision. Book your lash moment." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Instrument+Serif&display=swap" rel="stylesheet" />
+  <!-- fonts load without blocking the first paint (text shows in a fallback font for a moment) -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Instrument+Serif&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Instrument+Serif&display=swap" /></noscript>
   <link rel="preload" as="image" href="assets/poster-portrait.webp" media="(max-width: 860px) and (orientation: portrait)" />
   <link rel="preload" as="image" href="assets/poster.webp" media="not all and (max-width: 860px) and (orientation: portrait)" />
-  <link rel="stylesheet" href="styles.css?v=29" />
-  <script>document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" href="styles.css?v=30" />
 </head>
 <body>
-  <!-- loading screen: hides once the hero video is playing (or after a few seconds) -->
-  <div class="loader" id="loader" aria-hidden="true">
-    <span class="loader-logo">THEE SHAMIM EFFECT</span>
-    <span class="loader-bar"><i id="loaderBar"></i></span>
-  </div>
   <!-- faint vertical grid lines, like the inspiration site -->
   <div class="grid-lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
@@ -50,10 +46,11 @@
     <section class="hero" id="hero">
       <div class="hero-frame" id="heroFrame">
         <!-- portrait phones/tablets get a sharp portrait crop; landscape screens get the 1600px version.
-             Both are pre-cut to start at the hand. -->
-        <video class="hero-video" autoplay muted loop playsinline preload="auto">
-          <source src="assets/hero-portrait.mp4" type="video/mp4" media="(max-width: 860px) and (orientation: portrait)" />
-          <source src="assets/hero-1600.mp4" type="video/mp4" />
+             Both are pre-cut to start at the hand. The files are attached by script.js once the page has
+             loaded, so the headline and fonts download first; the still image shows until then. -->
+        <video class="hero-video" muted loop playsinline preload="none">
+          <source data-src="assets/hero-portrait.mp4" type="video/mp4" media="(max-width: 860px) and (orientation: portrait)" />
+          <source data-src="assets/hero-1600.mp4" type="video/mp4" />
         </video>
         <div class="hero-shade"></div>
         <div class="hero-content">
@@ -81,27 +78,27 @@
       </div>
       <div class="product-grid">
         <a href="#book" class="look-card reveal" data-service="strip" data-look="01" aria-label="Ask for a custom set like look 01">
-          <img src="assets/product-01.webp" alt="Custom strip lash look 01 on a practice lash head" loading="lazy" />
+          <img src="assets/product-01-640.webp" srcset="assets/product-01-640.webp 640w, assets/product-01.webp 900w" sizes="(max-width: 860px) 50vw, 33vw" alt="Custom strip lash look 01 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
         <a href="#book" class="look-card reveal" data-service="strip" data-look="02" aria-label="Ask for a custom set like look 02">
-          <img src="assets/product-02.webp" alt="Custom strip lash look 02 on a practice lash head" loading="lazy" />
+          <img src="assets/product-02-640.webp" srcset="assets/product-02-640.webp 640w, assets/product-02.webp 900w" sizes="(max-width: 860px) 50vw, 33vw" alt="Custom strip lash look 02 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
         <a href="#book" class="look-card reveal" data-service="strip" data-look="03" aria-label="Ask for a custom set like look 03">
-          <img src="assets/product-03.webp" alt="Custom strip lash look 03 on a practice lash head" loading="lazy" />
+          <img src="assets/product-03-640.webp" srcset="assets/product-03-640.webp 640w, assets/product-03.webp 900w" sizes="(max-width: 860px) 50vw, 33vw" alt="Custom strip lash look 03 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
         <a href="#book" class="look-card reveal" data-service="strip" data-look="04" aria-label="Ask for a custom set like look 04">
-          <img src="assets/product-04.webp" alt="Custom strip lash look 04 on a practice lash head" loading="lazy" />
+          <img src="assets/product-04-640.webp" srcset="assets/product-04-640.webp 640w, assets/product-04.webp 900w" sizes="(max-width: 860px) 50vw, 33vw" alt="Custom strip lash look 04 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
         <a href="#book" class="look-card reveal" data-service="strip" data-look="05" aria-label="Ask for a custom set like look 05">
-          <img src="assets/product-05.webp" alt="Custom strip lash look 05 on a practice lash head" loading="lazy" />
+          <img src="assets/product-05-640.webp" srcset="assets/product-05-640.webp 640w, assets/product-05.webp 900w" sizes="(max-width: 860px) 50vw, 33vw" alt="Custom strip lash look 05 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
         <a href="#book" class="look-card reveal" data-service="strip" data-look="06" aria-label="Ask for a custom set like look 06">
-          <img src="assets/product-06.webp" alt="Custom strip lash look 06 on a practice lash head" loading="lazy" />
+          <img src="assets/product-06-640.webp" srcset="assets/product-06-640.webp 640w, assets/product-06.webp 900w" sizes="(max-width: 860px) 50vw, 33vw" alt="Custom strip lash look 06 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
       </div>
@@ -117,7 +114,7 @@
         <li data-img="assets/studio-station.webp"><a href="#portfolio">MY WORK</a></li>
       </ul>
       <div class="index-preview">
-        <img id="indexImg" src="assets/set-classic.webp" alt="Lash set preview" />
+        <img id="indexImg" loading="lazy" src="assets/set-classic.webp" alt="Lash set preview" />
       </div>
     </section>
 
@@ -166,15 +163,15 @@
       </div>
       <div class="carousel" id="carousel">
         <div class="track" id="track">
-          <figure><img src="assets/set-volume.webp" alt="Volume lash set" loading="lazy" /></figure>
-          <figure><img src="assets/work-08.webp" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
-          <figure><img src="assets/work-09.webp" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
-          <figure><img src="assets/work-01.webp" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
-          <figure><img src="assets/set-classic.webp" alt="Classic lash set" loading="lazy" /></figure>
-          <figure><img src="assets/set-hybrid.webp" alt="Mid volume lash set" loading="lazy" /></figure>
-          <figure><img src="assets/work-02.webp" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
-          <figure><img src="assets/work-07.webp" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
-          <figure><img src="assets/work-10.webp" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/set-volume-640.webp" srcset="assets/set-volume-640.webp 640w, assets/set-volume.webp 691w" sizes="(max-width: 860px) 80vw, 33vw" alt="Volume lash set" loading="lazy" /></figure>
+          <figure><img src="assets/work-08-640.webp" srcset="assets/work-08-640.webp 640w, assets/work-08.webp 699w" sizes="(max-width: 860px) 80vw, 33vw" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/work-09-640.webp" srcset="assets/work-09-640.webp 640w, assets/work-09.webp 696w" sizes="(max-width: 860px) 80vw, 33vw" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/work-01-640.webp" srcset="assets/work-01-640.webp 640w, assets/work-01.webp 676w" sizes="(max-width: 860px) 80vw, 33vw" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/set-classic-640.webp" srcset="assets/set-classic-640.webp 640w, assets/set-classic.webp 900w" sizes="(max-width: 860px) 80vw, 33vw" alt="Classic lash set" loading="lazy" /></figure>
+          <figure><img src="assets/set-hybrid-640.webp" srcset="assets/set-hybrid-640.webp 640w, assets/set-hybrid.webp 900w" sizes="(max-width: 860px) 80vw, 33vw" alt="Mid volume lash set" loading="lazy" /></figure>
+          <figure><img src="assets/work-02-640.webp" srcset="assets/work-02-640.webp 640w, assets/work-02.webp 679w" sizes="(max-width: 860px) 80vw, 33vw" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/work-07-640.webp" srcset="assets/work-07-640.webp 640w, assets/work-07.webp 694w" sizes="(max-width: 860px) 80vw, 33vw" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/work-10-640.webp" srcset="assets/work-10-640.webp 640w, assets/work-10.webp 697w" sizes="(max-width: 860px) 80vw, 33vw" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
         </div>
       </div>
     </section>
@@ -188,7 +185,7 @@
       <!-- Collapsing cards: hover (desktop), tap (phone) or focus (keyboard) opens a card -->
       <div class="cc-cards" id="studioCards">
         <article class="cc-card active" tabindex="0" aria-expanded="true" aria-label="The Studio">
-          <div class="cc-img" style="background-image: url('assets/studio-station.webp'); background-position: center 60%;" role="img" aria-label="Lash station with practice head, tweezers, lash trays and eye pads"></div>
+          <div class="cc-img" data-bg="assets/studio-station.webp" style="background-position: center 60%;" role="img" aria-label="Lash station with practice head, tweezers, lash trays and eye pads"></div>
           <div class="cc-v-title" aria-hidden="true">The Studio</div>
           <div class="cc-content">
             <div class="cc-idx">01 / 03</div>
@@ -211,7 +208,7 @@
           </div>
         </article>
         <article class="cc-card" tabindex="0" aria-expanded="false" aria-label="Before your appointment">
-          <div class="cc-img" style="background-image: url('assets/studio-tools.webp'); background-position: center 40%;" role="img" aria-label="Lash tweezers and a spoolie on a heart-shaped mirror"></div>
+          <div class="cc-img" data-bg="assets/studio-tools.webp" style="background-position: center 40%;" role="img" aria-label="Lash tweezers and a spoolie on a heart-shaped mirror"></div>
           <div class="cc-v-title" aria-hidden="true">Before You Come</div>
           <div class="cc-content">
             <div class="cc-idx">02 / 03</div>
@@ -226,7 +223,7 @@
           </div>
         </article>
         <article class="cc-card" tabindex="0" aria-expanded="false" aria-label="Aftercare and policies">
-          <div class="cc-img" style="background-image: url('assets/studio-mirror.webp'); background-position: center 35%;" role="img" aria-label="Pink Lashes hand mirror with a lash mirror and spoolie"></div>
+          <div class="cc-img" data-bg="assets/studio-mirror.webp" style="background-position: center 35%;" role="img" aria-label="Pink Lashes hand mirror with a lash mirror and spoolie"></div>
           <div class="cc-v-title" aria-hidden="true">Aftercare</div>
           <div class="cc-content">
             <div class="cc-idx">03 / 03</div>
@@ -247,7 +244,7 @@
     <!-- ============ STORY ============ -->
     <section class="story" id="story">
       <div class="story-media">
-        <img src="assets/shamim-bench.webp" alt="The lash artist behind Thee Shamim Effect" loading="lazy" />
+        <img src="assets/shamim-bench-640.webp" srcset="assets/shamim-bench-640.webp 640w, assets/shamim-bench.webp 900w" sizes="(max-width: 860px) 100vw, 34vw" alt="The lash artist behind Thee Shamim Effect" loading="lazy" />
       </div>
       <span class="serif-note story-label">My Story</span>
       <span class="serif-note story-est">Est. 20XX</span>
@@ -274,12 +271,12 @@
   <!-- ============ FOOTER ============ -->
   <footer class="footer" id="book">
     <div class="footer-grid">
-      <img src="assets/footer-01.webp" alt="" loading="lazy" />
-      <img src="assets/footer-02.webp" alt="" loading="lazy" />
-      <img src="assets/footer-03.webp" alt="" loading="lazy" />
-      <img src="assets/footer-04.webp" alt="" loading="lazy" />
-      <img src="assets/footer-05.webp" alt="" loading="lazy" />
-      <img src="assets/footer-06.webp" alt="" loading="lazy" />
+      <img src="assets/footer-01-640.webp" alt="" loading="lazy" />
+      <img src="assets/footer-02-640.webp" alt="" loading="lazy" />
+      <img src="assets/footer-03-640.webp" alt="" loading="lazy" />
+      <img src="assets/footer-04-640.webp" alt="" loading="lazy" />
+      <img src="assets/footer-05-640.webp" alt="" loading="lazy" />
+      <img src="assets/footer-06-640.webp" alt="" loading="lazy" />
     </div>
     <h2 class="display light">LET&rsquo;S GET<br />YOU LASHED.</h2>
     <a href="#book" class="btn btn-light">BOOK NOW</a>
@@ -405,10 +402,7 @@
       });
     }
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js?v=11"></script>
-  <script src="booking.js?v=6"></script>
+  <script src="script.js?v=14" defer></script>
+  <script src="booking.js?v=7" defer></script>
 </body>
 </html>

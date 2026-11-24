@@ -1,63 +1,26 @@
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const hasGsap = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
-const animate = hasGsap && !reduceMotion;
-if (animate) document.documentElement.classList.add('js-anim');
 
-// ---------- Smooth scrolling (Lenis), synced with GSAP ----------
+// Smooth scrolling (Lenis) and the GSAP scroll animations are loaded *after* the page
+// has appeared (see "Start motion" at the bottom), so the first screen paints straight
+// away. Until then lenis is null and in-page links use the browser's own smooth scroll.
 let lenis = null;
-if (animate && typeof Lenis !== 'undefined') {
-  lenis = new Lenis({ lerp: 0.1 });
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((t) => lenis.raf(t * 1000));
-  gsap.ticker.lagSmoothing(0);
-}
 
-// ---------- Loading screen → hero video → headline ----------
-// The loader stays up until the hero video is actually playing (or MAX_WAIT passes,
-// e.g. on a slow connection or when the phone blocks autoplay). Then it fades out
-// and the headline rises in a moment later, over a video that's already moving.
+// ---------- Hero: still + headline show immediately; video fades in once it plays ----------
+// The video file is attached after the page has loaded so it doesn't compete with
+// the fonts and headline for bandwidth on slow connections.
 (() => {
-  const MAX_WAIT = 2500;   // never keep visitors waiting longer than this
-  const TEXT_DELAY = 600;  // pause between the loader fading and the headline rising
-  const hero = document.getElementById('hero');
-  const video = hero.querySelector('.hero-video');
-  const loader = document.getElementById('loader');
-  const bar = document.getElementById('loaderBar');
-  let done = false;
-
-  const lockScroll = (on) => {
-    document.documentElement.style.overflow = on ? 'hidden' : '';
-    if (lenis) on ? lenis.stop() : lenis.start();
+  const video = document.querySelector('.hero-video');
+  const show = () => video.classList.add('is-playing');
+  const start = () => {
+    video.querySelectorAll('source[data-src]').forEach((s) => { s.src = s.dataset.src; s.removeAttribute('data-src'); });
+    video.addEventListener('playing', show, { once: true });
+    video.autoplay = true;
+    video.preload = 'auto';
+    video.load();
+    video.play?.().catch(() => {}); // autoplay blocked: the still image stays
   };
-  const setProgress = (p) => { bar.style.transform = `scaleX(${Math.min(1, Math.max(0, p))})`; };
-
-  const finish = () => {
-    if (done) return;
-    done = true;
-    setProgress(1);
-    setTimeout(() => {
-      loader.classList.add('is-done');
-      lockScroll(false);
-      setTimeout(() => hero.classList.add('is-ready'), TEXT_DELAY);
-    }, 250);
-  };
-
-  const onPlaying = () => { video.classList.add('is-playing'); finish(); };
-
-
-  lockScroll(true);
-  setProgress(0.15);
-  video.addEventListener('playing', onPlaying, { once: true });
-  video.addEventListener('progress', () => {
-    if (video.duration && video.buffered.length) {
-      setProgress(0.15 + 0.85 * (video.buffered.end(video.buffered.length - 1) / video.duration));
-    }
-  });
-  video.addEventListener('error', finish);
-  // already playing from cache before this script ran
-  if (!video.paused && video.readyState >= 3) onPlaying();
-  else video.play?.().catch(() => {}); // autoplay blocked → the timeout below shows the poster instead
-  setTimeout(finish, MAX_WAIT);
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start, { once: true });
 })();
 
 // In-page links (navbar, menu, buttons) glide to their section with Lenis.
@@ -111,8 +74,17 @@ const setMenu = (open) => {
 toggle.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
 document.addEventListener('keydown', (e) => e.key === 'Escape' && setMenu(false));
 
-// ---------- Scroll animations ----------
-if (animate) {
+// ---------- Scroll animations (run once GSAP + ScrollTrigger + Lenis have loaded) ----------
+function initMotion() {
+  document.documentElement.classList.add('js-anim');
+  if (typeof Lenis !== 'undefined') {
+    lenis = new Lenis({ lerp: 0.1 });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+    if (document.body.classList.contains('menu-open')) lenis.stop();
+  }
+
   gsap.registerPlugin(ScrollTrigger);
   ScrollTrigger.config({ ignoreMobileResize: true });
 
@@ -168,9 +140,20 @@ if (animate) {
     .fromTo(media, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease: 'power4.inOut' })
     .fromTo(media.querySelector('img'), { scale: 1.3 }, { scale: 1, duration: 1.8, ease: 'power3.out' }, 0);
 
-  // Images loading late can shift layout; recalculate trigger positions
-  window.addEventListener('load', () => ScrollTrigger.refresh());
+  // the page has already loaded by now: measure everything once
+  ScrollTrigger.refresh();
 }
+
+// ---------- Studio card photos load only when the section is near the screen ----------
+(() => {
+  const bgs = document.querySelectorAll('.cc-img[data-bg]');
+  const load = (el) => { el.style.backgroundImage = `url('${el.dataset.bg}')`; el.removeAttribute('data-bg'); };
+  if (!('IntersectionObserver' in window)) return bgs.forEach(load);
+  const bgIO = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { load(e.target); bgIO.unobserve(e.target); }
+  }), { rootMargin: '600px 0px' });
+  bgs.forEach((el) => bgIO.observe(el));
+})();
 
 // ---------- Studio collapsing cards: one card open at a time ----------
 // Desktop: hovering a card opens it. Phone: tapping it. Keyboard: focusing it (Tab).
@@ -213,9 +196,9 @@ items.forEach((li) => {
 items[0]?.classList.add('active');
 
 // ---------- Portfolio carousel: auto-advances one tile at a time, loops ----------
-// Only used when scroll animations are off (reduced motion / GSAP unavailable);
-// otherwise the scroll moves the row (see "My Work" above).
-if (!animate) {
+// Only used when scroll animations are off (reduced motion, or the libraries failed
+// to load); otherwise the scroll moves the row (see "My Work" in initMotion).
+function startTimedCarousel() {
   const track = document.getElementById('track');
   let index = 0;
   const step = () => {
@@ -232,3 +215,27 @@ if (!animate) {
 }
 
 document.getElementById('year').textContent = new Date().getFullYear();
+
+// ---------- Start motion: load the animation libraries after the page has appeared ----------
+const MOTION_LIBS = [
+  'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js',
+];
+const LENIS_LIB = 'https://unpkg.com/lenis@1.1.13/dist/lenis.min.js';
+const loadScript = (src) => new Promise((resolve, reject) => {
+  const s = document.createElement('script');
+  s.src = src; s.async = false; s.onload = resolve; s.onerror = reject;
+  document.head.appendChild(s);
+});
+const startMotion = () => {
+  if (reduceMotion) return startTimedCarousel();
+  MOTION_LIBS.reduce((p, src) => p.then(() => loadScript(src)), Promise.resolve())
+    .then(() => loadScript(LENIS_LIB).catch(() => {})) // smooth scrolling is optional
+    .then(initMotion)
+    .catch(startTimedCarousel);
+};
+const whenIdle = (fn) => ('requestIdleCallback' in window
+  ? requestIdleCallback(fn, { timeout: 1500 })
+  : setTimeout(fn, 200));
+if (document.readyState === 'complete') whenIdle(startMotion);
+else window.addEventListener('load', () => whenIdle(startMotion), { once: true });
