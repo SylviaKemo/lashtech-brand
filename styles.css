@@ -143,6 +143,10 @@ main, footer { position: relative; z-index: 1; }
   clip-path: inset(0% 0% 0% 0% round 0px);
   will-change: clip-path;
 }
+/* portrait phones/tablets: still image matches the portrait video */
+@media (max-width: 860px) and (orientation: portrait) {
+  .hero-frame { background-image: url('assets/poster-portrait.webp'); }
+}
 .hero-video {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   opacity: 0; transition: opacity 1s ease;

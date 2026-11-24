@@ -8,8 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Instrument+Serif&display=swap" rel="stylesheet" />
-  <link rel="preload" as="image" href="assets/poster.webp" />
-  <link rel="stylesheet" href="styles.css?v=28" />
+  <link rel="preload" as="image" href="assets/poster-portrait.webp" media="(max-width: 860px) and (orientation: portrait)" />
+  <link rel="preload" as="image" href="assets/poster.webp" media="not all and (max-width: 860px) and (orientation: portrait)" />
+  <link rel="stylesheet" href="styles.css?v=29" />
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -48,10 +49,11 @@
     <!-- ============ HERO ============ -->
     <section class="hero" id="hero">
       <div class="hero-frame" id="heroFrame">
-        <!-- phones/tablets get the lighter 960px file, laptops the 1280px one (both pre-cut to start at the hand) -->
-        <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/poster.webp">
-          <source src="assets/hero-960.mp4" type="video/mp4" media="(max-width: 860px)" />
-          <source src="assets/hero-1280.mp4" type="video/mp4" />
+        <!-- portrait phones/tablets get a sharp portrait crop; landscape screens get the 1600px version.
+             Both are pre-cut to start at the hand. -->
+        <video class="hero-video" autoplay muted loop playsinline preload="auto">
+          <source src="assets/hero-portrait.mp4" type="video/mp4" media="(max-width: 860px) and (orientation: portrait)" />
+          <source src="assets/hero-1600.mp4" type="video/mp4" />
         </video>
         <div class="hero-shade"></div>
         <div class="hero-content">
