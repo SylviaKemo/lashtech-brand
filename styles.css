@@ -139,7 +139,7 @@ main, footer { position: relative; z-index: 1; }
   position: absolute; inset: 0; overflow: hidden;
   display: flex; align-items: flex-end; justify-content: center;
   /* the poster shows instantly while the video downloads */
-  background: #e9cfd3 url('assets/poster.jpg') center / cover no-repeat;
+  background: #e9cfd3 url('assets/poster.webp') center / cover no-repeat;
   clip-path: inset(0% 0% 0% 0% round 0px);
   will-change: clip-path;
 }

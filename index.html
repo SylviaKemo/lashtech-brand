@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Instrument+Serif&display=swap" rel="stylesheet" />
-  <link rel="preload" as="image" href="assets/poster.jpg" />
-  <link rel="stylesheet" href="styles.css?v=27" />
+  <link rel="preload" as="image" href="assets/poster.webp" />
+  <link rel="stylesheet" href="styles.css?v=28" />
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -48,8 +48,10 @@
     <!-- ============ HERO ============ -->
     <section class="hero" id="hero">
       <div class="hero-frame" id="heroFrame">
-        <video class="hero-video" autoplay muted playsinline preload="auto" poster="assets/poster.jpg">
-          <source src="assets/hero.mp4#t=1.8" type="video/mp4" />
+        <!-- phones/tablets get the lighter 960px file, laptops the 1280px one (both pre-cut to start at the hand) -->
+        <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/poster.webp">
+          <source src="assets/hero-960.mp4" type="video/mp4" media="(max-width: 860px)" />
+          <source src="assets/hero-1280.mp4" type="video/mp4" />
         </video>
         <div class="hero-shade"></div>
         <div class="hero-content">
@@ -77,27 +79,27 @@
       </div>
       <div class="product-grid">
         <a href="#book" class="look-card reveal" data-service="strip" data-look="01" aria-label="Ask for a custom set like look 01">
-          <img src="assets/product-01.jpg" alt="Custom strip lash look 01 on a practice lash head" loading="lazy" />
+          <img src="assets/product-01.webp" alt="Custom strip lash look 01 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
         <a href="#book" class="look-card reveal" data-service="strip" data-look="02" aria-label="Ask for a custom set like look 02">
-          <img src="assets/product-02.jpg" alt="Custom strip lash look 02 on a practice lash head" loading="lazy" />
+          <img src="assets/product-02.webp" alt="Custom strip lash look 02 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
         <a href="#book" class="look-card reveal" data-service="strip" data-look="03" aria-label="Ask for a custom set like look 03">
-          <img src="assets/product-03.jpg" alt="Custom strip lash look 03 on a practice lash head" loading="lazy" />
+          <img src="assets/product-03.webp" alt="Custom strip lash look 03 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
         <a href="#book" class="look-card reveal" data-service="strip" data-look="04" aria-label="Ask for a custom set like look 04">
-          <img src="assets/product-04.jpg" alt="Custom strip lash look 04 on a practice lash head" loading="lazy" />
+          <img src="assets/product-04.webp" alt="Custom strip lash look 04 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
         <a href="#book" class="look-card reveal" data-service="strip" data-look="05" aria-label="Ask for a custom set like look 05">
-          <img src="assets/product-05.jpg" alt="Custom strip lash look 05 on a practice lash head" loading="lazy" />
+          <img src="assets/product-05.webp" alt="Custom strip lash look 05 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
         <a href="#book" class="look-card reveal" data-service="strip" data-look="06" aria-label="Ask for a custom set like look 06">
-          <img src="assets/product-06.jpg" alt="Custom strip lash look 06 on a practice lash head" loading="lazy" />
+          <img src="assets/product-06.webp" alt="Custom strip lash look 06 on a practice lash head" loading="lazy" />
           <span class="look-cta">ASK FOR THIS LOOK</span>
         </a>
       </div>
@@ -106,14 +108,14 @@
     <!-- ============ INDEX LIST WITH HOVER IMAGE ============ -->
     <section class="index" id="services">
       <ul class="index-list">
-        <li data-img="assets/set-classic.jpg"><a href="#prices">CLASSIC SETS</a></li>
-        <li data-img="assets/set-hybrid.jpg"><a href="#prices">MID VOLUME</a></li>
-        <li data-img="assets/set-volume.jpg"><a href="#prices">VOLUME</a></li>
-        <li data-img="assets/set-extras.jpg"><a href="#prices">EXTRAS</a></li>
-        <li data-img="assets/studio-station.jpg"><a href="#portfolio">MY WORK</a></li>
+        <li data-img="assets/set-classic.webp"><a href="#prices">CLASSIC SETS</a></li>
+        <li data-img="assets/set-hybrid.webp"><a href="#prices">MID VOLUME</a></li>
+        <li data-img="assets/set-volume.webp"><a href="#prices">VOLUME</a></li>
+        <li data-img="assets/set-extras.webp"><a href="#prices">EXTRAS</a></li>
+        <li data-img="assets/studio-station.webp"><a href="#portfolio">MY WORK</a></li>
       </ul>
       <div class="index-preview">
-        <img id="indexImg" src="assets/set-classic.jpg" alt="Lash set preview" />
+        <img id="indexImg" src="assets/set-classic.webp" alt="Lash set preview" />
       </div>
     </section>
 
@@ -162,15 +164,15 @@
       </div>
       <div class="carousel" id="carousel">
         <div class="track" id="track">
-          <figure><img src="assets/set-volume.jpg" alt="Volume lash set" loading="lazy" /></figure>
-          <figure><img src="assets/work-08.jpg" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
-          <figure><img src="assets/work-09.jpg" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
-          <figure><img src="assets/work-01.jpg" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
-          <figure><img src="assets/set-classic.jpg" alt="Classic lash set" loading="lazy" /></figure>
-          <figure><img src="assets/set-hybrid.jpg" alt="Mid volume lash set" loading="lazy" /></figure>
-          <figure><img src="assets/work-02.jpg" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
-          <figure><img src="assets/work-07.jpg" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
-          <figure><img src="assets/work-10.jpg" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/set-volume.webp" alt="Volume lash set" loading="lazy" /></figure>
+          <figure><img src="assets/work-08.webp" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/work-09.webp" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/work-01.webp" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/set-classic.webp" alt="Classic lash set" loading="lazy" /></figure>
+          <figure><img src="assets/set-hybrid.webp" alt="Mid volume lash set" loading="lazy" /></figure>
+          <figure><img src="assets/work-02.webp" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/work-07.webp" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
+          <figure><img src="assets/work-10.webp" alt="Lash set by Thee Shamim Effect" loading="lazy" /></figure>
         </div>
       </div>
     </section>
@@ -184,7 +186,7 @@
       <!-- Collapsing cards: hover (desktop), tap (phone) or focus (keyboard) opens a card -->
       <div class="cc-cards" id="studioCards">
         <article class="cc-card active" tabindex="0" aria-expanded="true" aria-label="The Studio">
-          <div class="cc-img" style="background-image: url('assets/studio-station.jpg'); background-position: center 60%;" role="img" aria-label="Lash station with practice head, tweezers, lash trays and eye pads"></div>
+          <div class="cc-img" style="background-image: url('assets/studio-station.webp'); background-position: center 60%;" role="img" aria-label="Lash station with practice head, tweezers, lash trays and eye pads"></div>
           <div class="cc-v-title" aria-hidden="true">The Studio</div>
           <div class="cc-content">
             <div class="cc-idx">01 / 03</div>
@@ -207,7 +209,7 @@
           </div>
         </article>
         <article class="cc-card" tabindex="0" aria-expanded="false" aria-label="Before your appointment">
-          <div class="cc-img" style="background-image: url('assets/studio-tools.jpg'); background-position: center 40%;" role="img" aria-label="Lash tweezers and a spoolie on a heart-shaped mirror"></div>
+          <div class="cc-img" style="background-image: url('assets/studio-tools.webp'); background-position: center 40%;" role="img" aria-label="Lash tweezers and a spoolie on a heart-shaped mirror"></div>
           <div class="cc-v-title" aria-hidden="true">Before You Come</div>
           <div class="cc-content">
             <div class="cc-idx">02 / 03</div>
@@ -222,7 +224,7 @@
           </div>
         </article>
         <article class="cc-card" tabindex="0" aria-expanded="false" aria-label="Aftercare and policies">
-          <div class="cc-img" style="background-image: url('assets/studio-mirror.jpg'); background-position: center 35%;" role="img" aria-label="Pink Lashes hand mirror with a lash mirror and spoolie"></div>
+          <div class="cc-img" style="background-image: url('assets/studio-mirror.webp'); background-position: center 35%;" role="img" aria-label="Pink Lashes hand mirror with a lash mirror and spoolie"></div>
           <div class="cc-v-title" aria-hidden="true">Aftercare</div>
           <div class="cc-content">
             <div class="cc-idx">03 / 03</div>
@@ -243,7 +245,7 @@
     <!-- ============ STORY ============ -->
     <section class="story" id="story">
       <div class="story-media">
-        <img src="assets/shamim-bench.jpg" alt="The lash artist behind Thee Shamim Effect" loading="lazy" />
+        <img src="assets/shamim-bench.webp" alt="The lash artist behind Thee Shamim Effect" loading="lazy" />
       </div>
       <span class="serif-note story-label">My Story</span>
       <span class="serif-note story-est">Est. 20XX</span>
@@ -270,12 +272,12 @@
   <!-- ============ FOOTER ============ -->
   <footer class="footer" id="book">
     <div class="footer-grid">
-      <img src="assets/footer-01.jpg" alt="" loading="lazy" />
-      <img src="assets/footer-02.jpg" alt="" loading="lazy" />
-      <img src="assets/footer-03.jpg" alt="" loading="lazy" />
-      <img src="assets/footer-04.jpg" alt="" loading="lazy" />
-      <img src="assets/footer-05.jpg" alt="" loading="lazy" />
-      <img src="assets/footer-06.jpg" alt="" loading="lazy" />
+      <img src="assets/footer-01.webp" alt="" loading="lazy" />
+      <img src="assets/footer-02.webp" alt="" loading="lazy" />
+      <img src="assets/footer-03.webp" alt="" loading="lazy" />
+      <img src="assets/footer-04.webp" alt="" loading="lazy" />
+      <img src="assets/footer-05.webp" alt="" loading="lazy" />
+      <img src="assets/footer-06.webp" alt="" loading="lazy" />
     </div>
     <h2 class="display light">LET&rsquo;S GET<br />YOU LASHED.</h2>
     <a href="#book" class="btn btn-light">BOOK NOW</a>
@@ -404,7 +406,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="script.js?v=10"></script>
+  <script src="script.js?v=11"></script>
   <script src="booking.js?v=6"></script>
 </body>
 </html>

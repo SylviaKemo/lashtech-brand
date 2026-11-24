@@ -17,7 +17,7 @@ if (animate && typeof Lenis !== 'undefined') {
 // e.g. on a slow connection or when the phone blocks autoplay). Then it fades out
 // and the headline rises in a moment later, over a video that's already moving.
 (() => {
-  const MAX_WAIT = 4000;   // never keep visitors waiting longer than this
+  const MAX_WAIT = 2500;   // never keep visitors waiting longer than this
   const TEXT_DELAY = 600;  // pause between the loader fading and the headline rising
   const hero = document.getElementById('hero');
   const video = hero.querySelector('.hero-video');
@@ -44,16 +44,6 @@ if (animate && typeof Lenis !== 'undefined') {
 
   const onPlaying = () => { video.classList.add('is-playing'); finish(); };
 
-  // Skip the empty opening of the clip: play from HERO_START (just before the hand
-  // comes in) and loop back to it instead of to 0. The file itself is unchanged.
-  const HERO_START = 1.8;
-  const toStart = () => { if (video.currentTime < HERO_START) video.currentTime = HERO_START; };
-  video.addEventListener('loadedmetadata', toStart);
-  if (video.readyState >= 1) toStart();
-  video.addEventListener('timeupdate', () => {
-    if (video.duration && video.currentTime >= video.duration - 0.12) video.currentTime = HERO_START;
-  });
-  video.addEventListener('ended', () => { video.currentTime = HERO_START; video.play().catch(() => {}); });
 
   lockScroll(true);
   setProgress(0.15);
